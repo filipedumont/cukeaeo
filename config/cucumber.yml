@@ -1,0 +1,18 @@
+default: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT
+
+selenium_chrome_dev: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=chrome DRIVER=selenium
+selenium_firefox_dev: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=firefox DRIVER=selenium
+selenium_safari_dev: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=safari DRIVER=selenium
+selenium_ie_dev: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=ie DRIVER=selenium
+selenium_chrome_zone: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=zone BROWSER=chrome DRIVER=selenium
+selenium_firefox_zone: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=zone BROWSER=firefox DRIVER=selenium
+selenium_safari_zone: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=zone BROWSER=safari DRIVER=selenium
+selenium_ie_zone: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=zone BROWSER=ie DRIVER=selenium
+selenium_chrome_local: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=local BROWSER=chrome DRIVER=selenium
+selenium_firefox_local: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=local BROWSER=firefox DRIVER=selenium
+selenium_safari_local: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=local BROWSER=safari DRIVER=selenium
+selenium_ie_local: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=local BROWSER=ie DRIVER=selenium
+
+poltergeist_headless_dev: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=headless DRIVER=poltergeist
+poltergeist_headless_zone: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=zone BROWSER=headless DRIVER=poltergeist
+poltergeist_headless_local: -r features/support/ -r features/step_definitions --format html --out html-report/report.html --tags ~@NOT ENV=dev BROWSER=headless DRIVER=poltergeist
