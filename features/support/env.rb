@@ -7,6 +7,7 @@ require 'capybara/poltergeist'
 require 'socket'
 require 'selenium-webdriver'
 require 'rspec/expectations'
+require 'page-object'
 
 #Setting default values if no profile is selected
 ENV['ENV'] = 'local' unless ENV['ENV']
@@ -59,3 +60,4 @@ Capybara.run_server = true
 begin require 'rspec/expectations'; rescue LoadError; require 'spec/expectations'; end
 
 World(RSpec::Matchers)
+World(PageObject::PageFactory)

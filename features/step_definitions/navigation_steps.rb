@@ -1,17 +1,6 @@
 Given(/^I open the AE website$/) do
-  visit '/'
-  page.should have_content 'AEO'
-  begin
-    if page.has_xpath?('//input[@id=\'international_splash_submit\']')
-      find_by_id('international_splash_submit').click
-    elsif page.has_xpath?('//span[@class=\'close_text\']')
-      find(:xpath, "//span[@class='close_text']").click
-    end
-  rescue => error
-    unless error.message.include? 'Unable to find'
-      p error
-    end
-  end
+  visit_page HomePage
+  on_page(HomePage).check_international_splash
 end
 
 And(/^I open the PDP for "(.*?)"$/) do |pdp_type|
@@ -41,11 +30,7 @@ And(/^I click on "(.*?)" link$/) do |text|
 end
 
 Then(/^I login with "(.*?)" "(.*?)"$/) do |login, password|
-  steps %{
-  Then I input "#{login}" on the field "email"
-  And I input "#{password}" on the field "aeAccountPass"
-  When I click on "Sign In" input field
-}
+on_page(HomePage).login_with login, password
 end
 
 Then /^I logout from desktop$/ do
@@ -73,4 +58,13 @@ And(/^I change the shipping country to "(.*?)"$/) do |country|
   if find(:id, 'international_splash_submit').visible?
     find(:id, 'international_splash_submit').click
   end
+end
+
+Then(/^I should be on "(.*?)" page$/) do |current_page|
+  _page = Kernel::const_get(current_page)
+  on_page(_page).check_page
+end
+
+When(/^I facebook login with "(.*?)" "(.*?)"$/) do |login, password|
+  on_page(HomePage).facebook_login_with login, password
 end
