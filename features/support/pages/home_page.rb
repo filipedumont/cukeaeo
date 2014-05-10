@@ -11,10 +11,21 @@ class HomePage
   text_field(:user_password, :name => 'aeAccountPass')
   button(:sign_in_user, :value => 'Sign In')
 
-  span(:facebook_sign_in, :class => 'fb_login_action_text')
-  text_field(:facebook_user_email, :id => 'email')
-  text_field(:facebook_user_password, :id => 'pass')
+  div(:facebook_sign_in, :class => 'fb_login_bttn')
+#  text_field(:facebook_user_email, :id => 'email')
+ # text_field(:facebook_user_password, :id => 'pass')
   button(:facebook_login, :value => 'Log In')
+
+  div(:welcome_msg_logged_in, :class => 'tl_loginName')
+
+  def check_page
+    title.include?("American Eagle Outfitters")
+    #welcome_msg_logged_in_element.click
+    
+    #  welcome_msg_logged_in_element.text.include?("XXX,")
+    end
+    
+  end
 
 
   def check_international_splash
@@ -37,10 +48,16 @@ class HomePage
   end
 
   def facebook_login_with user_email, user_password
-    attach_to_window Capybara.current_session.driver.browser
+    sign_in
     facebook_sign_in_element.click
-    facebook_user_email = user_email
-    facebook_user_password = user_password
-    facebook_login
+
+    popup = Capybara.current_session.driver.browser.window_handles.last
+    Capybara.current_session.driver.browser.switch_to.window(popup)
+    
+    Capybara.current_session.within_window popup do 
+      Capybara.current_session.fill_in('email', :with => user_email)
+      Capybara.current_session.fill_in('pass', :with =>user_password)
+      Capybara.current_session.click_on('Log In')
+    end
   end
 end

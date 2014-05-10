@@ -8,5 +8,5 @@ Feature: Account management with user sign in
 @tc-2
   Scenario: Sign in user with Facebook account
     Given I open the AE website
-    When I facebook login with "login" "password"
+    When I facebook login with "v-francf-ave@ae.com" "Eagle123"
     Then I should be on "HomePage" page
