@@ -68,3 +68,24 @@ end
 When(/^I facebook login with "(.*?)" "(.*?)"$/) do |login, password|
   on_page(HomePage).facebook_login_with login, password
 end
+
+And(/^I fill the "(.*?)" field with "(.*?)"$/) do |field, value|
+  on_page(CreateAccountPage).fill_element field, value
+end
+
+
+And (/^I create a basic account$/) do
+  steps %{
+    And I fill the "first_name" field with "Filipe"
+    And I fill the "last_name" field with "Doe"
+    And I fill the "email" field with "filipe@ae.com"
+    And I fill the "email_confirmation" field with "filipe@ae.com"
+    And I fill the "password" field with "test123"
+    And I fill the "password_confirmation" field with "test123"
+    And I fill the "birthday_month" field with "May"
+    And I fill the "birthday_day" field with "07"
+    And I fill the "birthday_year" field with "1987"
+  }
+  on_page(CreateAccountPage).create_account
+end
+

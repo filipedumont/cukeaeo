@@ -7,24 +7,18 @@ class HomePage
   button(:close_modal, :class => 'close_text')
 
   link(:sign_in, text: 'Sign In')
+  link(:create_account, text: 'Create Account')
   text_field(:user_email, :name => 'email')
   text_field(:user_password, :name => 'aeAccountPass')
   button(:sign_in_user, :value => 'Sign In')
 
   div(:facebook_sign_in, :class => 'fb_login_bttn')
-#  text_field(:facebook_user_email, :id => 'email')
- # text_field(:facebook_user_password, :id => 'pass')
   button(:facebook_login, :value => 'Log In')
 
   div(:welcome_msg_logged_in, :class => 'tl_loginName')
 
   def check_page
     title.include?("American Eagle Outfitters")
-    #welcome_msg_logged_in_element.click
-    
-    #  welcome_msg_logged_in_element.text.include?("XXX,")
-    end
-    
   end
 
 
@@ -60,4 +54,6 @@ class HomePage
       Capybara.current_session.click_on('Log In')
     end
   end
+
 end
+
