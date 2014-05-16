@@ -45,3 +45,12 @@ When(/^I select size "(.*?)"$/) do |size|
 
   end
 end
+
+And(/^I search for a store with the "(.*?)" code$/) do | code |
+  on_page(PDPPage).find_store
+  on_page(StoreLocatorPage).search_near_stores code
+end
+
+Then(/^I should see a list of valid stores$/) do
+  on_page(StoreLocatorPage).check_stores_result
+end

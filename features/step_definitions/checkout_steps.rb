@@ -58,3 +58,22 @@ And /^I authenticate on 3D Secure modal with "(.*?)" password$/ do |password|
   fill_in 'external.field.password', :with => password
   click_and_scroll('xpath', "//input[@name='UsernamePasswordEntry']")
 end
+
+And(/^I proceed with "(.*?)" checkout$/) do |checkout|
+  sleep 2
+  case checkout
+    when 'guest'
+      on_page(PDPPage).guest_checkout
+    when 'signed'
+      steps %{When I login with "v-navesv-ave@ae.com" "test123" from the "PDPPage"}
+  end
+end
+
+And(/^I fill the basic "(.*?)" checkout$/) do | checkout |
+  case checkout
+    when 'guest'
+      on_page(CheckoutPage).fill_basic_guest_form
+    when 'signed'
+      on_page(CheckoutPage).fill_basic_signed_form
+  end
+end

@@ -13,6 +13,7 @@ class CreateAccountPage
   # text_field(:birthday_year, :id => 'createAccount_birthYear')
   button(:create_account, :name => 'create')
 
+
   def fill_element field, value
     if field.to_sym == :first_name
       self.first_name = value
@@ -38,6 +39,9 @@ class CreateAccountPage
   private
   #workaround for using pseudoSelectors
   def select_(locator, option)
-    Capybara.current_session.execute_script("var list = $(\".selectList:contains('#{locator}')\"); $(list).find(\"li:contains('#{option}')\").mousedown();");
+    Capybara.current_session.execute_script(
+      "var list = $(\".selectList:contains('#{locator}')\");
+      $(list).find(\"li:contains('#{option}')\").mousedown();"
+    );
   end
 end

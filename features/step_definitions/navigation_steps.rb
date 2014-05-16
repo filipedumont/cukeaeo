@@ -29,8 +29,9 @@ And(/^I click on "(.*?)" link$/) do |text|
   click_and_scroll('link', text)
 end
 
-Then(/^I login with "(.*?)" "(.*?)"$/) do |login, password|
-on_page(HomePage).login_with login, password
+Then(/^I login with "(.*?)" "(.*?)" from the "(.*?)"$/) do |login, password, page|
+  _page = Kernel::const_get(page)
+on_page(_page).login_with login, password
 end
 
 Then /^I logout from desktop$/ do
@@ -65,8 +66,14 @@ Then(/^I should be on "(.*?)" page$/) do |current_page|
   on_page(_page).check_page
 end
 
-When(/^I facebook login with "(.*?)" "(.*?)"$/) do |login, password|
-  on_page(HomePage).facebook_login_with login, password
+Then (/^I should be on the user "(.*?)"$/) do | current_page|
+  _page = Kernel::const_get(current_page)
+  on_page(_page).check_page_user
+end
+
+When(/^I facebook login with "(.*?)" "(.*?) from the "(.*?)"$/) do |login, password, page|
+  _page = Kernel::const_get(page)
+  on_page(_page).facebook_login_with login, password
 end
 
 And(/^I fill the "(.*?)" field with "(.*?)"$/) do |field, value|
@@ -89,3 +96,78 @@ And (/^I create a basic account$/) do
   on_page(CreateAccountPage).create_account
 end
 
+When(/^I navigate to "(.*?)" with the product "(.*?)"$/) do |page, product_sku|
+  _page = Kernel::const_get(page)
+  on_page(_page).open_pdp_with product_sku
+end
+
+And(/^I write a basic review for the product$/) do
+  on_page(PDPPage).write_review
+  steps %{
+    And I login with "v-navesv-ave@ae.com" "test123" from the "PDPPage"
+  }
+  on_page(ReviewProductPage).fill_basic_review
+end
+
+And(/^I add a product into the bag$/)do
+  on_page(PDPPage).add_to_bag
+end
+
+Then(/^I should have my bag updated$/) do
+  sleep 2
+  find(:xpath, "//span[@class='count']").text.to_f.should > 0
+end
+
+When(/^I move to "(.*?)" module$/) do |page|
+  sleep 5
+  _page = Kernel::const_get page
+  visit_page _page
+end
+
+
+Then(/^I should be logged in "(.*?)"$/) do | page |
+  _page = Kernel::const_get page
+  on_page(_page).check_page_user
+end
+
+When(/^I checkout from bag bar in the "(.*?)"$/) do |page|
+  _page = Kernel::const_get page
+  on_page(_page).bag_bar_checkout
+end
+
+Then(/^I should see my item added on the bag$/) do
+  on_page(CheckoutPage).check_product
+end
+
+When(/^I navigate to "(.*?)" section from "(.*?)"$/) do | section, page|
+_page = Kernel::const_get page
+  on_page(_page).navigate_to_section section
+end
+
+When(/^I add the product "(.*?)" from QV module$/) do | product |
+  on_page(BundlePage) do | page |
+    page.invoke_qv product
+    page.qv_add_to_bag
+  end
+end
+
+When(/^I track an order with number "(.*?)" and email "(.*?)"$/) do | order_no, order_email |
+  on_page(HomePage).track_order
+  on_page(TrackOrderPage).track_order_no order_no, order_email
+end
+
+Then(/^I should see the order status$/) do
+  on_page(TrackOrderPage).check_order
+end
+
+When(/^I open the international modal$/) do
+  on_page(HomePage).intl_modal
+end
+
+And(/^I change the "(.*?)" to "(.*?)"$/) do | option, value|
+  on_page(HomePage).change_intl_settings option, value
+end
+
+Then(/^I should see the settings applied for "(.*?)" to "(.*?)"$/) do |option, value|
+  on_page(HomePage).check_intl_settings_update option, value
+end

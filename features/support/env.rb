@@ -16,11 +16,11 @@ ENV['DRIVER'] = 'selenium' unless ENV['DRIVER']
 
 #Setting application web address
 if ENV['ENV'].downcase.eql? 'local'
-  Capybara.app_host = "http://#{Socket.gethostname}/web"
+  Capybara.app_host = "http://#{Socket.gethostname}/"
 elsif ENV['ENV'].downcase.eql? 'dev'
-  Capybara.app_host = 'http://test.aezone.com/web'
+  Capybara.app_host = 'http://test.aezone.com/'
 elsif ENV['ENV'].downcase.eql? 'zone'
-  Capybara.app_host = 'http://www.aezone.com/web'
+  Capybara.app_host = 'http://www.aezone.com/'
 end
 
 #Building driver from ENV variables
